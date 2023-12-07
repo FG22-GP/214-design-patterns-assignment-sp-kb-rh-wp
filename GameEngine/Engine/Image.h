@@ -9,9 +9,9 @@
 class Image
 {
 public:
-    Image(const char* path, SDL_Point* position, SDL_Point* size);
+    Image(const char* path, SDL_FPoint* position, SDL_FPoint* size);
     void Render();
-    SDL_Point* position;
-    SDL_Point* size;
+    SDL_FPoint* position;
+    SDL_FPoint* size;
     SDL_Texture* texture;
 };

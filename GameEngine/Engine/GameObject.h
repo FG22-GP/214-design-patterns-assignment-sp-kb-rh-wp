@@ -8,12 +8,12 @@ public:
     virtual ~GameObject() = default;
 
     Image* image;
-    void SetPosition(SDL_Point* point);
-    void Move(SDL_Point* direction, int distance);
-    SDL_Point* GetPosition() { return image->position; }
+    void SetPosition(SDL_FPoint* point);
+    void Move(SDL_FPoint* direction, float distance);
+    SDL_FPoint* GetPosition() { return image->position; }
     virtual void Update(float deltaTime);
 
-    static GameObject* Instantiate(SDL_Point* position = nullptr, SDL_Point* size = nullptr,
+    static GameObject* Instantiate(SDL_FPoint* position = nullptr, SDL_FPoint* size = nullptr,
                                    const char* imagePath = nullptr);
     static void UpdateAll(float deltaTime);
     static void RenderAll();
@@ -23,5 +23,5 @@ protected:
     std::list<bool> components;
 
 private:
-    GameObject(const char* path, SDL_Point* position, SDL_Point* size);
+    GameObject(const char* path, SDL_FPoint* position, SDL_FPoint* size);
 };

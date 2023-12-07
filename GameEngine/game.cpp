@@ -40,9 +40,8 @@ int main(int argc, char* args[])
 
     auto renderer = new Renderer(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-    bool pikachuMoveRight = false;
-    auto* pik_pos = new SDL_Point{0, 0};
-    auto* pik_size = new SDL_Point{50, 50};
+    auto* pik_pos = new SDL_FPoint{0, 0};
+    auto* pik_size = new SDL_FPoint{50, 50};
 
     auto pikachu = GameObject::Instantiate(pik_pos, pik_size, pikachuImagePath);
 
@@ -84,12 +83,14 @@ int main(int argc, char* args[])
 
     SDL_Event e;
     bool quit = false;
-    float deltaTime = 0.0f;
+    auto prevTime = SDL_GetTicks64();
 
     // while the user doesn't want to quit
     while (quit == false)
     {
-        deltaTime = static_cast<float>(SDL_GetTicks64()) / 1000 - deltaTime;
+        const auto currentTime = SDL_GetTicks64();
+        const float deltaTime = (currentTime - prevTime) / 1000.0f;
+        prevTime = currentTime;
         // can be used, to see, how much time in ms has passed since app start
 
 
@@ -111,12 +112,10 @@ int main(int argc, char* args[])
                     // input example: if left, then make pikachu move left
                     if (e.key.keysym.sym == SDLK_LEFT)
                     {
-                        pikachuMoveRight = false;
                     }
                     // if right, then make pikachu move right
                     if (e.key.keysym.sym == SDLK_RIGHT)
                     {
-                        pikachuMoveRight = true;
                     }
                 }
                 break;
@@ -125,21 +124,22 @@ int main(int argc, char* args[])
 
         // This is an example for how to check, whether keys are currently pressed:
         const Uint8* keystate = SDL_GetKeyboardState(nullptr);
+        printf("%f\n", deltaTime);
         if (keystate[SDL_SCANCODE_UP])
         {
-            pikachu->Move(new SDL_Point{0, 1}, 1);
+            pikachu->Move(new SDL_FPoint{0, 1}, 100 * deltaTime);
         }
         if (keystate[SDL_SCANCODE_DOWN])
         {
-            pikachu->Move(new SDL_Point{0, -1}, 1);
+            pikachu->Move(new SDL_FPoint{0, -1}, 100 * deltaTime);
         }
         if (keystate[SDL_SCANCODE_LEFT])
         {
-            pikachu->Move(new SDL_Point{-1, 0}, 1);
+            pikachu->Move(new SDL_FPoint{-1, 0}, 100 * deltaTime);
         }
         if (keystate[SDL_SCANCODE_RIGHT])
         {
-            pikachu->Move(new SDL_Point{1, 0}, 1);
+            pikachu->Move(new SDL_FPoint{1, 0}, 100 * deltaTime);
         }
 
         GameObject::UpdateAll(deltaTime);

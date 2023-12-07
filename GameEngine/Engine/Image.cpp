@@ -1,6 +1,6 @@
 ﻿#include "Image.h"
 
-Image::Image(const char* path, SDL_Point* position, SDL_Point* size)
+Image::Image(const char* path, SDL_FPoint* position, SDL_FPoint* size)
 {
     //Load image at specified path
     SDL_Surface* loadedSurface = IMG_Load(path);
