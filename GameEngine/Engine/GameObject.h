@@ -12,12 +12,14 @@ public:
     void Move(SDL_FPoint* direction, float distance);
     SDL_FPoint* GetPosition() { return image->position; }
     virtual void Update(float deltaTime);
-
+    void AddComponent(bool);
+    
     static GameObject* Instantiate(SDL_FPoint* position = nullptr, SDL_FPoint* size = nullptr,
                                    const char* imagePath = nullptr);
     static void UpdateAll(float deltaTime);
     static void RenderAll();
     inline static std::list<GameObject*>* gameObjects = new std::list<GameObject*>();
+    
 
 protected:
     std::list<bool> components;

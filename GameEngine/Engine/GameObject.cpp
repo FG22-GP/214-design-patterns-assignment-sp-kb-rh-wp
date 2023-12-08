@@ -33,6 +33,11 @@ void GameObject::Update(float deltaTime)
     }
 }
 
+void GameObject::AddComponent(bool component)
+{
+    components.push_back(component);
+}
+
 GameObject* GameObject::Instantiate(SDL_FPoint* position, SDL_FPoint* size, const char* imagePath)
 {
     const auto go = new GameObject(imagePath, position, size);
