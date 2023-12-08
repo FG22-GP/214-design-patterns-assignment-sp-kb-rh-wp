@@ -102,12 +102,16 @@
         </ClCompile>
         <ClCompile Include="Engine\Image.cpp"/>
         <ClCompile Include="Engine\Renderer.cpp"/>
+        <ClCompile Include="Engine\Text.cpp" />
+        <ClCompile Include="Engine\UiObject.cpp" />
         <ClCompile Include="game.cpp"/>
     </ItemGroup>
     <ItemGroup>
         <ClInclude Include="Engine\GameObject.h"/>
         <ClInclude Include="Engine\Image.h"/>
         <ClInclude Include="Engine\Renderer.h"/>
+        <ClInclude Include="Engine\Text.h" />
+        <ClInclude Include="Engine\UiObject.h" />
         <ClInclude Include="Window.h"/>
     </ItemGroup>
     <ItemGroup>

@@ -14,7 +14,7 @@ void GameObject::SetPosition(SDL_FPoint* point)
     image->position = point;
 }
 
-void GameObject::Move(SDL_FPoint* direction, float distance)
+void GameObject::Move(SDL_FPoint* direction, const float distance)
 {
     auto newPosition = new SDL_FPoint{
         image->position->x + direction->x * distance, image->position->y - direction->y * distance
@@ -35,12 +35,12 @@ void GameObject::Update(float deltaTime)
 
 GameObject* GameObject::Instantiate(SDL_FPoint* position, SDL_FPoint* size, const char* imagePath)
 {
-    auto go = new GameObject(imagePath, position, size);
+    const auto go = new GameObject(imagePath, position, size);
     gameObjects->push_back(go);
     return go;
 }
 
-void GameObject::UpdateAll(float deltaTime)
+void GameObject::UpdateAll(const float deltaTime)
 {
     for (auto it = gameObjects->begin(); it != gameObjects->end(); ++it)
     {

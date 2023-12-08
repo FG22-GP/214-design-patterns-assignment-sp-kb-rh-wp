@@ -1,7 +1,7 @@
 ﻿#include "Renderer.h"
 
 
-Renderer::Renderer(int width, int height)
+Renderer::Renderer(const int width, const int height)
 {
     if (instance)
     {

@@ -26,6 +26,6 @@ Image::Image(const char* path, SDL_FPoint* position, SDL_FPoint* size)
 
 void Image::Render()
 {
-    const SDL_Rect rectangle = {(position->x), (position->y), (size->x), (size->y)};
+    const SDL_Rect rectangle = {static_cast<int>(position->x), static_cast<int>(position->y), static_cast<int>(size->x), static_cast<int>(size->y)};
     SDL_RenderCopy(Renderer::GetRenderer(), texture, nullptr, &rectangle);
 }
