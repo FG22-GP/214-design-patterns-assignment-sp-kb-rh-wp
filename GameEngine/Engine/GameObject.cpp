@@ -7,6 +7,7 @@
 GameObject::GameObject(const char* path, SDL_FPoint* position, SDL_FPoint* size)
 {
     image = new Image(path, position, size);
+    components = new std::list<Component*>();
 }
 
 void GameObject::SetPosition(SDL_FPoint* point)
@@ -24,18 +25,15 @@ void GameObject::Move(SDL_FPoint* direction, const float distance)
 
 void GameObject::Update(float deltaTime)
 {
-    for (auto component : components)
+    for (auto it = components->begin(); it != components->end(); ++it)
     {
-        if (component)
-        {
-            // Update component
-        }
+        (*it)->Update(*this, deltaTime);
     }
 }
 
-void GameObject::AddComponent(bool component)
+void GameObject::AddComponent(Component* component)
 {
-    components.push_back(component);
+    components->push_back(component);
 }
 
 GameObject* GameObject::Instantiate(SDL_FPoint* position, SDL_FPoint* size, const char* imagePath)

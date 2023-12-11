@@ -10,11 +10,15 @@
 #include "Engine/Renderer.h"
 #include "Engine/Text.h"
 
+#include "Engine/PlayerInputComponent.h"
+#include "Engine/AIInputComponent.h"
+
 //Screen dimension constants
 constexpr int SCREEN_WIDTH = 1024;
 constexpr int SCREEN_HEIGHT = 768;
 
 const char* pikachuImagePath{"img/pikachu.png"};
+const char* charmanderImagePath{"img/charmander.png"};
 
 Renderer* renderer = new Renderer(SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -51,7 +55,14 @@ int main(int argc, char* args[])
     auto* pik_pos = new SDL_FPoint{0, 0};
     auto* pik_size = new SDL_FPoint{50, 50};
 
+    auto* cha_pos = new SDL_FPoint{ 0, 0 };
+    auto* cha_size = new SDL_FPoint{ 50, 50 };
+
     auto pikachu = GameObject::Instantiate(pik_pos, pik_size, pikachuImagePath);
+    pikachu->AddComponent((Component*) new PlayerInputComponent(100));
+
+    auto charmander = GameObject::Instantiate(cha_pos, cha_size, charmanderImagePath);
+    charmander->AddComponent((Component*) new AIInputComponent(pikachu, 50));
 
     // load font
     auto font = TTF_OpenFont("font/lazy.ttf", 100);
@@ -105,25 +116,6 @@ int main(int argc, char* args[])
                 }
                 break;
             }
-        }
-
-        // This is an example for how to check, whether keys are currently pressed:
-        const Uint8* keystate = SDL_GetKeyboardState(nullptr);
-        if (keystate[SDL_SCANCODE_UP])
-        {
-            pikachu->Move(new SDL_FPoint{0, 1}, 100 * deltaTime);
-        }
-        if (keystate[SDL_SCANCODE_DOWN])
-        {
-            pikachu->Move(new SDL_FPoint{0, -1}, 100 * deltaTime);
-        }
-        if (keystate[SDL_SCANCODE_LEFT])
-        {
-            pikachu->Move(new SDL_FPoint{-1, 0}, 100 * deltaTime);
-        }
-        if (keystate[SDL_SCANCODE_RIGHT])
-        {
-            pikachu->Move(new SDL_FPoint{1, 0}, 100 * deltaTime);
         }
 
         GameObject::UpdateAll(deltaTime);
