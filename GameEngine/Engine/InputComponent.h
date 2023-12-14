@@ -13,6 +13,6 @@ public:
 	float movementSpeed;
 
 	void FlipSprite();
-	void Move(float deltaTime, bool flipSprite = false, bool clampToScreen = false);
+	void Move(float deltaTime, bool flipSprite = false, bool clampToScreen = false, bool destroyOffScreen = false);
 };
 

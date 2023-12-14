@@ -3,22 +3,17 @@
 
 void CollisionSystem::Update(float deltaTime)
 {
-	for (auto it = colliders->begin(); it != colliders->end(); ++it) 
+	for (auto it = colliders->begin(); it != colliders->end(); ++it)
 	{
 		ColliderComponent* collider = (*it);
-
-		if (collider->parent->destroyTag) continue;
 
 		if (!colliderMap.contains(collider->tagToCheck)) continue;
 		
 		auto listToCheck = colliderMap.at(collider->tagToCheck);
 
-		for (auto other = listToCheck->begin(); other != listToCheck->end(); ++other)
+		for (auto other = listToCheck->begin(); other != listToCheck->end(); ++ other)
 		{
 			ColliderComponent* otherCollider = (*other);
-
-			if (collider->parent->destroyTag) break;
-			if (otherCollider->parent->destroyTag) continue;
 
 			if (collider != otherCollider)
 			{
@@ -43,4 +38,9 @@ void CollisionSystem::AddCollider(const char* tag, ColliderComponent* colliderCo
 {
 	colliderMap.at(tag)->push_back(colliderComponent);
 	colliders->push_back(colliderComponent);
+}
+
+void CollisionSystem::RemoveCollider(const char* tag, ColliderComponent* colliderComponent)
+{
+	colliderMap.at(tag)->remove(colliderComponent);
 }

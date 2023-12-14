@@ -11,8 +11,8 @@ class Image
 public:
     Image(const char* path, SDL_FPoint* position, SDL_FPoint* size, float angle = 0);
     void Render();
-    SDL_FPoint* position;
-    SDL_FPoint* size;
+    SDL_FPoint* position = new SDL_FPoint{0, 0};
+    SDL_FPoint* size = new SDL_FPoint{ 0, 0 };
     SDL_Texture* texture;
 
     float angle;

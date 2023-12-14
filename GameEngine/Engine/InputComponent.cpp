@@ -7,7 +7,7 @@ InputComponent::InputComponent()
 
 void InputComponent::Update(float deltaTime)
 {
-	Move(deltaTime, true);
+	Move(deltaTime, true, false, true);
 }
 
 void InputComponent::FlipSprite()
@@ -22,12 +22,12 @@ void InputComponent::FlipSprite()
 	}
 }
 
-void InputComponent::Move(float deltaTime, bool flipSprite, bool clampToScreen)
+void InputComponent::Move(float deltaTime, bool flipSprite, bool clampToScreen, bool destroyOffScreen)
 {
 	if (flipSprite)
 	{
 		FlipSprite();
 	}
 
-	parent->Move(NormalizeVector(movementDirection), movementSpeed * deltaTime, clampToScreen);
+	parent->Move(NormalizeVector(movementDirection), movementSpeed * deltaTime, clampToScreen, destroyOffScreen);
 }

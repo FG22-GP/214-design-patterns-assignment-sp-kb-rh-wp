@@ -16,13 +16,13 @@
 #include "Engine/HealthComponent.h"
 #include "Engine/AttackComponent.h"
 #include "Engine/CollisionSystem.h"
+#include "Engine/EnemySpawner.h"
 
 //Screen dimension constants
 constexpr int SCREEN_WIDTH = 1024;
 constexpr int SCREEN_HEIGHT = 768;
 
 const char* pikachuImagePath{"img/pikachu.png"};
-const char* charmanderImagePath{"img/charmander.png"};
 
 Renderer* renderer = new Renderer(SCREEN_WIDTH, SCREEN_HEIGHT);
 
@@ -52,20 +52,6 @@ bool Initialize()
     return true;
 }
 
-void SpawnCharmanders(GameObject* pikachu, int amount)
-{
-    auto* cha_pos = new SDL_FPoint{ 0, 0 };
-    auto* cha_size = new SDL_FPoint{ 50, 50 };
-
-    for (int i = 0; i < amount; i++)
-    {
-        auto charmander = GameObject::Instantiate(cha_pos, cha_size, charmanderImagePath);
-
-        charmander->AddComponent(new AIInputComponent(pikachu, 100));
-        charmander->AddComponent(new HealthComponent(20, 1));
-        charmander->AddComponent(new ColliderComponent(10, "Enemy", "Bullet"));
-    }
-}
 
 GameObject* SpawnPlayer()
 {
@@ -75,7 +61,7 @@ GameObject* SpawnPlayer()
     auto pikachu = GameObject::Instantiate(pik_pos, pik_size, pikachuImagePath);
 
     pikachu->AddComponent(new HealthComponent(100, 1));
-    pikachu->AddComponent(new ColliderComponent(10, "Player"));
+    pikachu->AddComponent(new ColliderComponent(15, "Player"));
     pikachu->AddComponent(new AttackComponent(1));
     pikachu->AddComponent(new PlayerInputComponent(200));
 
@@ -97,7 +83,7 @@ int main(int argc, char* args[])
 
     GameObject* pikachu = SpawnPlayer();
 
-    SpawnCharmanders(pikachu, 1);
+    EnemySpawner* enemySpawner = new EnemySpawner(pikachu, 3);
 
     // load font
     auto font = TTF_OpenFont("font/lazy.ttf", 100);
@@ -159,6 +145,7 @@ int main(int argc, char* args[])
             }
         }
 
+        enemySpawner->Update(deltaTime);
         GameObject::UpdateAll(deltaTime);
         CollisionSystem::Update(deltaTime);
 

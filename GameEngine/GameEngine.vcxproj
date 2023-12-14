@@ -32,6 +32,7 @@
     <ClCompile Include="Engine\ColliderComponent.cpp" />
     <ClCompile Include="Engine\CollisionSystem.cpp" />
     <ClCompile Include="Engine\Component.cpp" />
+    <ClCompile Include="Engine\EnemySpawner.cpp" />
     <ClCompile Include="Engine\GameObject.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -120,6 +121,7 @@
     <ClInclude Include="Engine\ColliderComponent.h" />
     <ClInclude Include="Engine\CollisionSystem.h" />
     <ClInclude Include="Engine\Component.h" />
+    <ClInclude Include="Engine\EnemySpawner.h" />
     <ClInclude Include="Engine\GameObject.h" />
     <ClInclude Include="Engine\HealthComponent.h" />
     <ClInclude Include="Engine\HelperFunctions.h" />

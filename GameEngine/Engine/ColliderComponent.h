@@ -11,11 +11,11 @@ class ColliderComponent : public Component
 public:
 	ColliderComponent(float radius, const char* tag, const char* tagToCheck = "");
 
+	virtual void Destroyed() override;
+
 	float radius;
 	const char* tag;
 	const char* tagToCheck;
-
-	inline static std::list<ColliderComponent*>* colliders = new std::list<ColliderComponent*>();
 
 	virtual void Update(float deltaTime) override;
 

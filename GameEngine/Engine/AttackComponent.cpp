@@ -53,9 +53,9 @@ void AttackComponent::Attack()
 
 	InputComponent* input = new InputComponent();
 	electroBall->AddComponent(input);
-	electroBall->AddComponent(new ColliderComponent(10, "Bullet", "Enemy"));
+	electroBall->AddComponent(new ColliderComponent(12, "Bullet", "Enemy"));
 
-	input->movementSpeed = 100;
+	input->movementSpeed = 300;
 
 	input->movementDirection->x = attackDirection->x;
 	input->movementDirection->y = attackDirection->y;

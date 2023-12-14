@@ -13,7 +13,7 @@ public:
     Image* image;
 
     void SetPosition(SDL_FPoint* point);
-    void Move(SDL_FPoint* direction, float distance, bool clampToScreen = false);
+    void Move(SDL_FPoint* direction, float distance, bool clampToScreen = false, bool destroyOffScreen = false);
 
     void SetRotation(float angle = 0, SDL_RendererFlip flip = SDL_FLIP_NONE);
 

@@ -22,6 +22,8 @@ public:
 
 	static void AddCollider(const char* tag, ColliderComponent* colliderComponent);
 
+	static void RemoveCollider(const char* tag, ColliderComponent* colliderComponent);
+
 private:
 	static bool CirclesCollide(float x1, float y1, float r1, float x2, float y2, float r2);
 

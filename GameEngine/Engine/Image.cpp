@@ -20,9 +20,9 @@ Image::Image(const char* path, SDL_FPoint* position, SDL_FPoint* size, float ang
     //Get rid of old loaded surface
     SDL_FreeSurface(loadedSurface);
 
-    Image::position = position;
-    Image::size = size;
-    Image::angle = angle;
+    this->position = position;
+    this->size = size;
+    this->angle = angle;
 }
 
 void Image::Render()

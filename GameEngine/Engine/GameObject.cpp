@@ -27,10 +27,10 @@ void GameObject::SetRotation(float angle, SDL_RendererFlip flip)
 
 SDL_FPoint* GameObject::GetCenterPosition()
 {
-    return new SDL_FPoint{image->position->x + image->size->x / 2, image->position->y + image->size->y / 2 };
+    return new SDL_FPoint{ image->position->x + image->size->x / 2, image->position->y + image->size->y / 2 };
 }
 
-void GameObject::Move(SDL_FPoint* direction, const float distance, bool clampToScreen)
+void GameObject::Move(SDL_FPoint* direction, const float distance, bool clampToScreen, bool destroyOffScreen)
 {
     auto newPosition = new SDL_FPoint{
         image->position->x + direction->x * distance, image->position->y - direction->y * distance
@@ -50,12 +50,33 @@ void GameObject::Move(SDL_FPoint* direction, const float distance, bool clampToS
         newPosition->y = SDL_clamp(newPosition->y, 0, maxY);
     }
 
+    if (destroyOffScreen)
+    {
+        int maxX;
+        int maxY;
+
+        SDL_RenderGetLogicalSize(Renderer::GetRenderer(), &maxX, &maxY);
+
+        if (newPosition->x > maxX + 100 || newPosition->x < -100 ||
+            newPosition->y > maxY + 100 || newPosition->y < -100)
+        {
+
+            DestroyGameObject();
+            return;
+        }
+    }
+
     SetPosition(newPosition);
 }
 
 void GameObject::DestroyGameObject()
 {
     destroyTag = true;
+
+    for (auto it = components->begin(); it != components->end(); ++it)
+    {
+        (*it)->destroyTag = true;
+    }
 }
 
 void GameObject::Update(float deltaTime)
@@ -113,8 +134,18 @@ void GameObject::DeleteDestroyedGameObjects()
         }
     }
 
-    while (!pendingForDelete->empty()) {
+    while (!pendingForDelete->empty())
+    {
+        while (!pendingForDelete->front()->components->empty())
+        {
+            pendingForDelete->front()->components->front()->Destroyed();
+            delete pendingForDelete->front()->components->front();
+            pendingForDelete->front()->components->front() = nullptr;
+            pendingForDelete->front()->components->pop_front();
+        }
+
         delete pendingForDelete->front();
+        pendingForDelete->front() = nullptr;
         pendingForDelete->pop_front();
     }
 }
