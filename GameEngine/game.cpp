@@ -55,13 +55,18 @@ bool Initialize()
 
 GameObject* SpawnPlayer()
 {
-    auto* pik_pos = new SDL_FPoint{20, 20};
     auto* pik_size = new SDL_FPoint{50, 50};
+
+    int maxX, maxY;
+
+    SDL_RenderGetLogicalSize(Renderer::GetRenderer(), &maxX, &maxY);
+
+    auto* pik_pos = new SDL_FPoint{(float) maxX / 2 - pik_size->x / 2, (float) maxY / 2 - pik_size->y / 2};
 
     auto pikachu = GameObject::Instantiate(pik_pos, pik_size, pikachuImagePath);
 
-    pikachu->AddComponent(new HealthComponent(100, 1));
-    pikachu->AddComponent(new ColliderComponent(15, "Player"));
+    pikachu->AddComponent(new HealthComponent(100, 0.3f, true));
+    pikachu->AddComponent(new ColliderComponent(15, "Player", "Enemy"));
     pikachu->AddComponent(new AttackComponent(1));
     pikachu->AddComponent(new PlayerInputComponent(200));
 

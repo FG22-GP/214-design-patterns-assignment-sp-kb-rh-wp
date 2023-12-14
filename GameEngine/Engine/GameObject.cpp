@@ -27,7 +27,7 @@ void GameObject::SetRotation(float angle, SDL_RendererFlip flip)
 
 SDL_FPoint* GameObject::GetCenterPosition()
 {
-    return new SDL_FPoint{ image->position->x + image->size->x / 2, image->position->y + image->size->y / 2 };
+    return new SDL_FPoint{ image->position->x + image->size->x / 4, image->position->y + image->size->y / 4 };
 }
 
 void GameObject::Move(SDL_FPoint* direction, const float distance, bool clampToScreen, bool destroyOffScreen)

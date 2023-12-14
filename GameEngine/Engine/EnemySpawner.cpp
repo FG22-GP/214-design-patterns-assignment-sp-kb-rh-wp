@@ -28,7 +28,7 @@ void EnemySpawner::Spawn()
 	auto charmander = GameObject::Instantiate(RandomizeSpawnPosition(), enemySize, charmanderImagePath);
 
 	charmander->AddComponent(new AIInputComponent(target, 100));
-	charmander->AddComponent(new HealthComponent(20, 1));
+	charmander->AddComponent(new HealthComponent(20, 0));
 	charmander->AddComponent(new ColliderComponent(15, "Enemy", "Bullet"));
 }
 
@@ -44,18 +44,22 @@ SDL_FPoint* EnemySpawner::RandomizeSpawnPosition()
 
 	switch (side)
 	{
+		//top
 		case 0:
 			x = rand() % maxX;
 			y = 0;
-		break;
+			break;
+		//right
 		case 1:
 			x = maxX;
 			y = rand() % maxY;
-		break;
+			break;
+		//bottom
 		case 2:
 			x = rand() % maxX;
 			y = maxY;
 			break;
+		//left
 		case 3:
 			x = 0;
 			y = rand() % maxY;

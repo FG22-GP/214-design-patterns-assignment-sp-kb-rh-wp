@@ -49,7 +49,7 @@ void AttackComponent::Attack()
 {
 	auto* size = new SDL_FPoint{ 30, 30 };
 
-	auto electroBall = GameObject::Instantiate(parent->GetPosition(), size, electroBallImagePath);
+	auto electroBall = GameObject::Instantiate(parent->GetCenterPosition(), size, electroBallImagePath);
 
 	InputComponent* input = new InputComponent();
 	electroBall->AddComponent(input);

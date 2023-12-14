@@ -9,6 +9,14 @@ AIInputComponent::AIInputComponent(GameObject* target, float moveSpeed)
 
 void AIInputComponent::Update(float deltaTime)
 {
+	if (target == nullptr) return;
+
+	if (target->destroyTag)
+	{
+		target = nullptr;
+		return;
+	}
+
 	SDL_FPoint* targetPosition = target->GetPosition();
 	SDL_FPoint* currentPosition = parent->GetPosition();
 
