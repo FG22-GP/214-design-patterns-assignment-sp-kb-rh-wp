@@ -9,6 +9,6 @@ public:
 
 	AIInputComponent(GameObject* target, float moveSpeed);
 
-	virtual void Update(GameObject& gameObject, float deltaTime) override;
+	virtual void Update(float deltaTime) override;
 };
 

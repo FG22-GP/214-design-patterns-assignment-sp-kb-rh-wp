@@ -3,14 +3,16 @@
 #include "HelperFunctions.h"
 #include "GameObject.h"
 
-class InputComponent : Component
+class InputComponent : public Component
 {
 
 public:
 	InputComponent();
-	virtual void Update(GameObject& gameObject, float deltaTime) {};
+	virtual void Update(float deltaTime);
 	SDL_FPoint* movementDirection;
 	float movementSpeed;
-	void Move(GameObject& gameObject, float deltaTime);
+
+	void FlipSprite();
+	void Move(float deltaTime, bool flipSprite = false, bool clampToScreen = false);
 };
 

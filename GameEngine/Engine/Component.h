@@ -7,6 +7,8 @@ class Component
 public:
 	Component();
 
-	virtual void Update(GameObject&, float deltaTime);
+	virtual void Update(float deltaTime);
+
+	GameObject* parent;
 };
 

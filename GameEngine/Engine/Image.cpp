@@ -1,6 +1,6 @@
 ﻿#include "Image.h"
 
-Image::Image(const char* path, SDL_FPoint* position, SDL_FPoint* size)
+Image::Image(const char* path, SDL_FPoint* position, SDL_FPoint* size, float angle)
 {
     //Load image at specified path
     SDL_Surface* loadedSurface = IMG_Load(path);
@@ -22,10 +22,11 @@ Image::Image(const char* path, SDL_FPoint* position, SDL_FPoint* size)
 
     Image::position = position;
     Image::size = size;
+    Image::angle = angle;
 }
 
 void Image::Render()
 {
     const SDL_Rect rectangle = {static_cast<int>(position->x), static_cast<int>(position->y), static_cast<int>(size->x), static_cast<int>(size->y)};
-    SDL_RenderCopy(Renderer::GetRenderer(), texture, nullptr, &rectangle);
+    SDL_RenderCopyEx(Renderer::GetRenderer(), texture, nullptr, &rectangle, angle, center, flip);
 }

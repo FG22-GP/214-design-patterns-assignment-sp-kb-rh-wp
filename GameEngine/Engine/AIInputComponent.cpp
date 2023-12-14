@@ -1,5 +1,4 @@
 #include "AIInputComponent.h"
-
 #include <cmath>
 
 AIInputComponent::AIInputComponent(GameObject* target, float moveSpeed)
@@ -8,14 +7,14 @@ AIInputComponent::AIInputComponent(GameObject* target, float moveSpeed)
 	movementSpeed = moveSpeed;
 }
 
-void AIInputComponent::Update(GameObject& gameObject, float deltaTime)
+void AIInputComponent::Update(float deltaTime)
 {
 	SDL_FPoint* targetPosition = target->GetPosition();
-	SDL_FPoint* currentPosition = gameObject.GetPosition();
+	SDL_FPoint* currentPosition = parent->GetPosition();
 
 	movementDirection->x = targetPosition->x - currentPosition->x;
 	movementDirection->y = targetPosition->y - currentPosition->y;
 	movementDirection->y *= -1;
 
-	Move(gameObject, deltaTime);
+	Move(deltaTime, true);
 }

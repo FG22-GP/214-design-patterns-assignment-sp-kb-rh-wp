@@ -1,9 +1,10 @@
 #include "Component.h"
+#include "GameObject.h"
 
 Component::Component()
 {
 }
 
-void Component::Update(GameObject&, float deltaTime)
+void Component::Update(float deltaTime)
 {
 }

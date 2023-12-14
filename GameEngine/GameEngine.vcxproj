@@ -28,6 +28,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\AIInputComponent.cpp" />
+    <ClCompile Include="Engine\AttackComponent.cpp" />
+    <ClCompile Include="Engine\ColliderComponent.cpp" />
+    <ClCompile Include="Engine\CollisionSystem.cpp" />
     <ClCompile Include="Engine\Component.cpp" />
     <ClCompile Include="Engine\GameObject.cpp">
       <RuntimeLibrary>MultiThreadedDebugDll</RuntimeLibrary>
@@ -102,6 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <LinkCompiled>true</LinkCompiled>
     </ClCompile>
+    <ClCompile Include="Engine\HealthComponent.cpp" />
     <ClCompile Include="Engine\Image.cpp" />
     <ClCompile Include="Engine\InputComponent.cpp" />
     <ClCompile Include="Engine\PlayerInputComponent.cpp" />
@@ -112,8 +116,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\AIInputComponent.h" />
+    <ClInclude Include="Engine\AttackComponent.h" />
+    <ClInclude Include="Engine\ColliderComponent.h" />
+    <ClInclude Include="Engine\CollisionSystem.h" />
     <ClInclude Include="Engine\Component.h" />
     <ClInclude Include="Engine\GameObject.h" />
+    <ClInclude Include="Engine\HealthComponent.h" />
     <ClInclude Include="Engine\HelperFunctions.h" />
     <ClInclude Include="Engine\Image.h" />
     <ClInclude Include="Engine\InputComponent.h" />

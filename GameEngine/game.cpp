@@ -12,6 +12,10 @@
 
 #include "Engine/PlayerInputComponent.h"
 #include "Engine/AIInputComponent.h"
+#include "Engine/ColliderComponent.h"
+#include "Engine/HealthComponent.h"
+#include "Engine/AttackComponent.h"
+#include "Engine/CollisionSystem.h"
 
 //Screen dimension constants
 constexpr int SCREEN_WIDTH = 1024;
@@ -48,21 +52,52 @@ bool Initialize()
     return true;
 }
 
+void SpawnCharmanders(GameObject* pikachu, int amount)
+{
+    auto* cha_pos = new SDL_FPoint{ 0, 0 };
+    auto* cha_size = new SDL_FPoint{ 50, 50 };
+
+    for (int i = 0; i < amount; i++)
+    {
+        auto charmander = GameObject::Instantiate(cha_pos, cha_size, charmanderImagePath);
+
+        charmander->AddComponent(new AIInputComponent(pikachu, 100));
+        charmander->AddComponent(new HealthComponent(20, 1));
+        charmander->AddComponent(new ColliderComponent(10, "Enemy", "Bullet"));
+    }
+}
+
+GameObject* SpawnPlayer()
+{
+    auto* pik_pos = new SDL_FPoint{20, 20};
+    auto* pik_size = new SDL_FPoint{50, 50};
+
+    auto pikachu = GameObject::Instantiate(pik_pos, pik_size, pikachuImagePath);
+
+    pikachu->AddComponent(new HealthComponent(100, 1));
+    pikachu->AddComponent(new ColliderComponent(10, "Player"));
+    pikachu->AddComponent(new AttackComponent(1));
+    pikachu->AddComponent(new PlayerInputComponent(200));
+
+    return pikachu;
+}
+
+void SetUpCollisionSystem()
+{
+    std::array<const char*, 3> tags = { "Player", "Enemy", "Bullet" };
+
+    new CollisionSystem(tags);
+}
+
 int main(int argc, char* args[])
 {
     if (!Initialize()) return -1;
 
-    auto* pik_pos = new SDL_FPoint{0, 0};
-    auto* pik_size = new SDL_FPoint{50, 50};
+    SetUpCollisionSystem();
 
-    auto* cha_pos = new SDL_FPoint{ 0, 0 };
-    auto* cha_size = new SDL_FPoint{ 50, 50 };
+    GameObject* pikachu = SpawnPlayer();
 
-    auto pikachu = GameObject::Instantiate(pik_pos, pik_size, pikachuImagePath);
-    pikachu->AddComponent((Component*) new PlayerInputComponent(100));
-
-    auto charmander = GameObject::Instantiate(cha_pos, cha_size, charmanderImagePath);
-    charmander->AddComponent((Component*) new AIInputComponent(pikachu, 50));
+    SpawnCharmanders(pikachu, 1);
 
     // load font
     auto font = TTF_OpenFont("font/lazy.ttf", 100);
@@ -84,6 +119,12 @@ int main(int argc, char* args[])
     // while the user doesn't want to quit
     while (quit == false)
     {
+        const Uint8* keystate = SDL_GetKeyboardState(nullptr);
+        if (keystate[SDL_SCANCODE_ESCAPE])
+        {
+            quit = true;
+        }
+
         const auto currentTime = SDL_GetTicks64();
         const float deltaTime = (currentTime - prevTime) / 1000.0f;
         prevTime = currentTime;
@@ -119,6 +160,7 @@ int main(int argc, char* args[])
         }
 
         GameObject::UpdateAll(deltaTime);
+        CollisionSystem::Update(deltaTime);
 
         // clear the screen
         SDL_SetRenderDrawColor(Renderer::GetRenderer(), 120, 60, 255, 255);
@@ -127,9 +169,10 @@ int main(int argc, char* args[])
         GameObject::RenderAll();
         UiObject::RenderAll();
 
-
         // present screen (switch buffers)
         SDL_RenderPresent(Renderer::GetRenderer());
+
+        GameObject::DeleteDestroyedGameObjects();
 
         SDL_Delay(0); // can be used to wait for a certain amount of ms
     }
