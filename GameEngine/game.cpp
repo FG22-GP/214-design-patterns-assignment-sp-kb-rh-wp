@@ -65,7 +65,7 @@ GameObject* SpawnPlayer()
 
     auto pikachu = GameObject::Instantiate(pik_pos, pik_size, pikachuImagePath);
 
-    pikachu->AddComponent(new HealthComponent(100, 0.3f, true));
+    pikachu->AddComponent(new HealthComponent(100, 0.3f));
     pikachu->AddComponent(new ColliderComponent(15, "Player", "Enemy"));
     pikachu->AddComponent(new AttackComponent(1));
     pikachu->AddComponent(new PlayerInputComponent(200));
@@ -101,7 +101,7 @@ int main(int argc, char* args[])
     // create text from font
     SDL_Color textColor = {0xff, 0xff, 0xff};
 
-    auto text = new Text("Hej hej", font, textColor, new SDL_FPoint{50, 0});
+    //auto text = new Text("Hej hej", font, textColor, new SDL_FPoint{50, 0});
 
     SDL_Event e;
     bool quit = false;
