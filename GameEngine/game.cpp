@@ -90,19 +90,6 @@ int main(int argc, char* args[])
 
     EnemySpawner* enemySpawner = new EnemySpawner(pikachu, 3);
 
-    // load font
-    auto font = TTF_OpenFont("font/lazy.ttf", 100);
-    if (font == nullptr)
-    {
-        printf("Failed to load lazy font! SDL_ttf Error: %s\n", TTF_GetError());
-        return -1;
-    }
-
-    // create text from font
-    SDL_Color textColor = {0xff, 0xff, 0xff};
-
-    //auto text = new Text("Hej hej", font, textColor, new SDL_FPoint{50, 0});
-
     SDL_Event e;
     bool quit = false;
     auto prevTime = SDL_GetTicks64();
@@ -119,36 +106,9 @@ int main(int argc, char* args[])
         const auto currentTime = SDL_GetTicks64();
         const float deltaTime = (currentTime - prevTime) / 1000.0f;
         prevTime = currentTime;
-        // can be used, to see, how much time in ms has passed since app start
-
-
+        
         // loop through all pending events from Windows (OS)
-        while (SDL_PollEvent(&e))
-        {
-            // check, if it's an event we want to react to:
-            switch (e.type)
-            {
-            case SDL_QUIT:
-                {
-                    quit = true;
-                }
-                break;
-
-            // This is an example on how to use input events:
-            case SDL_KEYDOWN:
-                {
-                    // input example: if left, then make pikachu move left
-                    if (e.key.keysym.sym == SDLK_LEFT)
-                    {
-                    }
-                    // if right, then make pikachu move right
-                    if (e.key.keysym.sym == SDLK_RIGHT)
-                    {
-                    }
-                }
-                break;
-            }
-        }
+        while (SDL_PollEvent(&e)) { }
 
         enemySpawner->Update(deltaTime);
         GameObject::UpdateAll(deltaTime);
